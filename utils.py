@@ -99,10 +99,10 @@ def add_edges_conv(dictionary, num_layers, attributes, input_found = True):
 
 # TODO: refactor to maybe have more efficient mappings??? Wrote some code to track total count
 def add_hw_mapping(dictionary, num_neurons, num_layers):
-    # if not hasattr(add_mapping, "total_neurons"):
-    #     add_mapping.total_neurons = 0
-    # add_mapping.total_neurons += num_neurons
-    # add_mapping.total_neurons %= 1023
+    # if not hasattr(add_hw_mapping, "total_neurons"):
+    #     add_hw_mapping.total_neurons = 0
+    # add_hw_mapping.total_neurons += num_neurons
+    # add_hw_mapping.total_neurons %= 1023
 
     dictionary['mappings'].append(OrderedDict({
                 f'group{num_layers}.0..{num_neurons-1}': {'core': float(f'{num_layers}.0')} # TODO: this float cast is weird
