@@ -1,0 +1,5 @@
+network:
+  name: base_yaml
+  groups: []
+  edges: []
+mappings: []

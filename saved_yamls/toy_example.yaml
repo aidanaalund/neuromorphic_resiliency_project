@@ -1,0 +1,48 @@
+network:
+  name: toy_example
+  groups:
+  - name: group0
+    attributes:
+    - soma_hw_name: loihi_inputs
+    - log_spikes: true
+    neurons:
+    - 0..1:
+      - spikes:
+        - 1
+        - 0
+        - 0
+        - 0
+  - name: group1
+    attributes:
+    - threshold: 1.0
+    neurons:
+    - 0..1: []
+  - name: group2
+    attributes:
+    - threshold: 1.0
+    neurons:
+    - 0..1: []
+  edges:
+  - group0.0 -> group1.0:
+    - weight: 0.2881428301334381
+  - group0.1 -> group1.0:
+    - weight: 0.057614151388406754
+  - group0.0 -> group1.1:
+    - weight: 0.5983712077140808
+  - group0.1 -> group1.1:
+    - weight: -0.42900264263153076
+  - group1.0 -> group2.0:
+    - weight: 0.10000000149011612
+  - group1.1 -> group2.0:
+    - weight: 0.20000000298023224
+  - group1.0 -> group2.1:
+    - weight: 0.30000001192092896
+  - group1.1 -> group2.1:
+    - weight: 0.4000000059604645
+mappings:
+- group0.0..1:
+    core: 0.0
+- group1.0..1:
+    core: 1.0
+- group2.0..1:
+    core: 2.0
