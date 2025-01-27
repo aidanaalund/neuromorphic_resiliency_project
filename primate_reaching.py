@@ -75,5 +75,7 @@ if __name__ == "__main__":
 
     layer_list = [net.dropout, net.fc1, net.lif1, net.fc_out, net.lif_out]
 
+    # TODO: figure out the input encoding
+
     # Thus, the high-level order is: Input → Dropout → fc1 → lif1 → fc_out → lif_out → Output 
-    utils.convert_list_snn_to_yaml(layer_list, 'primate_reaching') # convert to yaml
+    utils.convert_list_snn_to_yaml(layer_list, 'primate_reaching', [{'rate': 0.6}]) # convert to yaml

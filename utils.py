@@ -109,7 +109,7 @@ def add_hw_mapping(dictionary, num_neurons, num_layers):
             }))
 
 # TODO: cannot handle MaxPool2d, MaxPool1d, and sort of Conv2d at the moment.
-def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs,num_layers,prev_edges):
+def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs,num_layers,prev_edges, input = [{'spikes': [1,0,0,0]}]):
         if isinstance(layer, nn.Linear):
             print("Linear")
             if not input_found: # Case of first layer
@@ -117,7 +117,7 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
                 prev_edges = layer.weight.detach().numpy()
                 # TODO: commented code adds ability to add individual neurons
                 model_attributes = [{'soma_hw_name' : 'loihi_inputs'}, {'log_spikes': True}]
-                neuron_attributes = [{'spikes' : [1,0,0,0]}] #TODO: test this line further
+                neuron_attributes = input #TODO: This will need to be reworked
                 add_neuron(dictionary, f'group{num_layers-1}', num_previous_layer_outputs, model_attributes, neuron_attributes)
                 #initialize_group(dictionary, f'group_{num_layers}', model_attributes)
                 #for i in range(num_previous_layer_outputs):
@@ -185,7 +185,7 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
             print("Unknown layer type")
         return num_previous_layer_outputs, prev_edges, input_found, num_layers
 
-def convert_sequential_snn_to_yaml(net, name = 'output', input_type = 'spike'):
+def convert_sequential_snn_to_yaml(net, name = 'output', input = [{'spikes': [1,0,0,0]}]):
     input_found = False
     num_previous_layer_outputs = -1
     num_layers = 1
@@ -195,10 +195,10 @@ def convert_sequential_snn_to_yaml(net, name = 'output', input_type = 'spike'):
     for layer in net:
         num_previous_layer_outputs, prev_edges, input_found, num_layers = identify_layer_type(dictionary, layer,input_found,
                                                                                               num_previous_layer_outputs,
-                                                                                              num_layers,prev_edges)
+                                                                                              num_layers,prev_edges,input)
     dump_yaml(dictionary, name)
 
-def convert_class_snn_to_yaml(net, name = 'output', input_type = 'spike'): 
+def convert_class_snn_to_yaml(net, name = 'output', input = [{'spikes': [1,0,0,0]}]): 
     input_found = False
     num_previous_layer_outputs = -1
     num_layers = 1
@@ -208,10 +208,10 @@ def convert_class_snn_to_yaml(net, name = 'output', input_type = 'spike'):
     for _, layer in net.named_children():
         num_previous_layer_outputs, prev_edges, input_found, num_layers = identify_layer_type(dictionary, layer,input_found,
                                                                                               num_previous_layer_outputs,
-                                                                                              num_layers,prev_edges)
+                                                                                              num_layers,prev_edges,input)
     dump_yaml(dictionary, name)
 
-def convert_list_snn_to_yaml(list, name = 'output', input_type = 'spike'):
+def convert_list_snn_to_yaml(list, name = 'output', input = [{'spikes': [1,0,0,0]}]):
     input_found = False
     num_previous_layer_outputs = -1
     num_layers = 1
@@ -221,10 +221,10 @@ def convert_list_snn_to_yaml(list, name = 'output', input_type = 'spike'):
     for layer in list:
         num_previous_layer_outputs, prev_edges, input_found, num_layers = identify_layer_type(dictionary, layer,input_found,
                                                                                               num_previous_layer_outputs,
-                                                                                              num_layers,prev_edges)
+                                                                                              num_layers,prev_edges,input)
     dump_yaml(dictionary, name)
 
-def test_yaml(name = 'output', input_type = 'spike'):
+def test_yaml(name = 'output', input = [{'spikes': [1,0,0,0]}]):
     input_found = False
     num_previous_layer_outputs = -1
     num_layers = 1

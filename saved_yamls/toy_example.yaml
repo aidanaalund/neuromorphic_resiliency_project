@@ -24,13 +24,13 @@ network:
     - 0..1: []
   edges:
   - group0.0 -> group1.0:
-    - weight: 0.2881428301334381
+    - weight: 0.16581514477729797
   - group0.1 -> group1.0:
-    - weight: 0.057614151388406754
+    - weight: 0.3218526244163513
   - group0.0 -> group1.1:
-    - weight: 0.5983712077140808
+    - weight: 0.49236631393432617
   - group0.1 -> group1.1:
-    - weight: -0.42900264263153076
+    - weight: 0.3643852174282074
   - group1.0 -> group2.0:
     - weight: 0.10000000149011612
   - group1.1 -> group2.0:
