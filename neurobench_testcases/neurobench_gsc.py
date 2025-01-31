@@ -28,6 +28,8 @@ from torch import nn
 import snntorch as snn
 from snntorch import surrogate
 
+import yaml
+
 if __name__ == "__main__":
 
     beta = 0.9
@@ -49,7 +51,7 @@ if __name__ == "__main__":
     # Wrap our net in the SNNTorchModel wrapper
     model = SNNTorchModel(net)
 
-    test_set = SpeechCommands(path="neurobench_testcases/data/", subset="testing")
+    test_set = SpeechCommands(path="/home/ala4225/nmr_project/neurobench_testcases/data", subset="testing")
     test_set_loader = DataLoader(test_set, batch_size=500, shuffle=True)
 
     preprocessors = [S2SPreProcessor(device='cpu')] # CHANGE
@@ -62,4 +64,6 @@ if __name__ == "__main__":
                         preprocessors, postprocessors, [static_metrics, workload_metrics])
 
     results = benchmark.run()
-    print(results)
+    #print(results)
+    with open('gsc_neurobench.yaml', 'w') as file:
+        yaml.dump(results, file)
