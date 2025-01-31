@@ -171,7 +171,8 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
                 input_found = True
             add_edges_conv(dictionary, num_layers, attributes, input_found)
         elif isinstance(layer, nn.MaxPool2d):
-            print("Pooling")
+            print("MaxPool2D")
+            # if maxpool, neuron: 0..15: [compartments: [in:, out:, join:, peek:]]
             attributes = {
                     'type': 'maxpool2d',
                     'kernel_size': layer.kernel_size,
