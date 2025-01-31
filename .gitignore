@@ -1,4 +1,5 @@
 *.wav
 *.mat
 *.gz
+*.pyc
 data/
