@@ -1,0 +1,2 @@
+nohup: ignoring input
+python3: can't open file '/home/ala4225/nmr_project/neurobench_testcases/neurobench_primate.py': [Errno 2] No such file or directory

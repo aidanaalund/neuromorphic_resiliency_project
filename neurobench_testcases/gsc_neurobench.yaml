@@ -1,0 +1,8 @@
+ActivationSparsity: 0.9671202744393858
+ClassificationAccuracy: 0.8563380269828788
+ConnectionSparsity: 0.0
+Footprint: 583900
+SynapticOperations:
+  Dense: 29030400.0
+  Effective_ACs: 3289834.6292594275
+  Effective_MACs: 0.0
