@@ -14,7 +14,8 @@ from neurobench.models import SNNTorchModel
 from neurobench.metrics.workload import (
     ActivationSparsity,
     SynapticOperations,
-    ClassificationAccuracy
+    ClassificationAccuracy,
+    MembraneUpdates
 )
 from neurobench.metrics.static import (
     Footprint,
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     postprocessors = [ChooseMaxCount()]
 
     static_metrics = [Footprint, ConnectionSparsity]
-    workload_metrics = [ClassificationAccuracy, ActivationSparsity, SynapticOperations]
+    workload_metrics = [ClassificationAccuracy, ActivationSparsity, SynapticOperations, MembraneUpdates]
 
     benchmark = Benchmark(model, test_set_loader,
                         preprocessors, postprocessors, [static_metrics, workload_metrics])

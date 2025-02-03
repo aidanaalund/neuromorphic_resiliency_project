@@ -13,7 +13,8 @@ from neurobench.models import TorchModel
 from neurobench.metrics.workload import (
     R2,
     ActivationSparsity,
-    SynapticOperations
+    SynapticOperations,
+    MembraneUpdates
 )
 
 from neurobench.metrics.static import (
@@ -72,11 +73,19 @@ class SNN2(nn.Module):
         return predictions
 
 if __name__ == "__main__":
+    # The dataloader and preprocessor has been combined together into a single class
+    data_dir = "/home/ala4225/nmr_project/neurobench_testcases/data" # data in repo root dir
 
-    net = SNN2(input_size = 96) # Pretty sure this is 96 based on the dataloader stuff in the ipynb, different values don't work.
+    filename = "indy_20160622_01"
+
+    dataset = PrimateReaching(file_path=data_dir, filename=filename,
+                            num_steps=1, train_ratio=0.5, bin_width=0.004,
+                            biological_delay=0, remove_segments_inactive=False)
     
-    # Load the pre-trained weights
-    filename = "indy_20160622_01" # specify a dataset (TODO: verify this is the right one)
+    net = SNN2(input_size = dataset.input_feature_size) # Pretty sure this is 96 based on the dataloader stuff in the ipynb, different values don't work.
+    test_set_loader = DataLoader(Subset(dataset, dataset.ind_test), batch_size=len(dataset.ind_test), shuffle=False)
+    # Load the pre-trained weights 
+    # # specify a dataset (TODO: verify this is the right one)
     model_path = r"/home/ala4225/neurobench/neurobench/examples/primate_reaching/model_data"
     model_path = model_path + "/SNN2_{}.pt"
     net.load_state_dict(torch.load(model_path.format(filename), map_location=torch.device('cpu'), weights_only = True) 
@@ -86,31 +95,18 @@ if __name__ == "__main__":
     model = TorchModel(net) # using TorchModel instead of SNNTorchModel because the SNN iterates over dimension 0
     model.add_activation_module(snn.SpikingNeuron)
 
-    
-
-    filename = "indy_20160622_01"
-
-    # The dataloader and preprocessor has been combined together into a single class
-    data_dir = "/home/ala4225/nmr_project/neurobench_testcases/data" # data in repo root dir
-    dataset = PrimateReaching(file_path=data_dir, filename=filename,
-                            num_steps=1, train_ratio=0.5, bin_width=0.004,
-                            biological_delay=0, remove_segments_inactive=False)
-
-    test_set_loader = DataLoader(Subset(dataset, dataset.ind_test), batch_size=len(dataset.ind_test), shuffle=False)
-
-
     preprocessors = []
     postprocessors = []
 
     static_metrics = [Footprint, ConnectionSparsity]
-    workload_metrics = [R2, ActivationSparsity, SynapticOperations]
+    workload_metrics = [R2, ActivationSparsity, SynapticOperations, MembraneUpdates]
 
     benchmark = Benchmark(model, test_set_loader,
                         preprocessors, postprocessors, [static_metrics, workload_metrics])
 
-    results = benchmark.run()
+    results = benchmark.run() # this takes FOREVER
     #print(results)
-    with open('gsc_neurobench.yaml', 'w') as file:
+    with open('primate_neurobench.yaml', 'w') as file:
         yaml.dump(results, file)
     # TODO: save the results in a file
 

@@ -1,0 +1,8 @@
+ActivationSparsity: 0.9963282696436487
+ConnectionSparsity: 0.0
+Footprint: 19648
+R2: 0.67884361743927
+SynapticOperations:
+  Dense: 4900.0
+  Effective_ACs: 396.9383705600964
+  Effective_MACs: 0.0
