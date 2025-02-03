@@ -28,4 +28,4 @@ if __name__ == "__main__":
     # TODO: figure out the input encoding
 
     # convert to yaml
-    utils.convert_sequential_snn_to_yaml(net,'gsc',[{'spikes': [1,0,0,0]}])
+    utils.convert_sequential_snn_to_yaml(net,'gsc',[{'rate': 0.6}])

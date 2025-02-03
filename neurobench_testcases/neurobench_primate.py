@@ -20,6 +20,7 @@ from neurobench.metrics.workload import (
 from neurobench.metrics.static import (
     ConnectionSparsity,
     Footprint
+    #ParameterCount
 )
 
 from neurobench.benchmarks import Benchmark
@@ -98,7 +99,7 @@ if __name__ == "__main__":
     preprocessors = []
     postprocessors = []
 
-    static_metrics = [Footprint, ConnectionSparsity]
+    static_metrics = [Footprint, ConnectionSparsity, ParameterCount]
     workload_metrics = [R2, ActivationSparsity, SynapticOperations, MembraneUpdates]
 
     benchmark = Benchmark(model, test_set_loader,
