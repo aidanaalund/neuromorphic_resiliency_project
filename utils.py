@@ -174,12 +174,18 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
             print("MaxPool2D")
             # if maxpool, neuron: 0..15: [compartments: [in:, out:, join:, peek:]]
             attributes = {
-                    'type': 'maxpool2d',
-                    'kernel_size': layer.kernel_size,
-                    'stride': layer.stride,
-                    'padding': layer.padding,
+                    # 'type': 'maxpool2d',
+                    # 'kernel_size': layer.kernel_size,
+                    # 'stride': layer.stride,
+                    # 'padding': layer.padding,
+                    # TODO: example of maxpool2d. Do we still need kernels and strides?
+                    'compartments': 3,
+                    'compartment_in_ops' : ["skip", "peek_a", "pop_a_and_b"],
+                    'compartment_out_ops' : ["push", "push", "skip"],
+                    'compartment_join_ops' : ["skip", "add", "max"]
             }
-            # TODO: maybe add edges here for maxpool?
+            # TODO: maybe add edges here for maxpool? They need somekind of edge parameter
+            add_neuron(dictionary, f'group{num_layers}', num_neurons, attributes, [])
         elif isinstance(layer, nn.Dropout):
             print("Dropout") # Ignore dropout layers? during conversion, they are a function of trainings
         else:
