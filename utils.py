@@ -97,6 +97,13 @@ def add_edges_conv(dictionary, num_layers, attributes, input_found = True):
                 s+f' -> group{num_layers}': [attributes]
             }))
 
+def add_edges_maxpool2d(dictionary, num_layers, attributes, input_found = True):
+    s = f'group{num_layers-1}'
+    
+    dictionary['network']['edges'].append(OrderedDict({
+                s+f' -> group{num_layers}': [attributes]
+            }))
+
 # TODO: refactor to maybe have more efficient mappings??? Wrote some code to track total count
 def add_hw_mapping(dictionary, num_neurons, num_layers):
     # if not hasattr(add_hw_mapping, "total_neurons"):
@@ -109,16 +116,16 @@ def add_hw_mapping(dictionary, num_neurons, num_layers):
             }))
 
 # TODO: cannot handle MaxPool2d, MaxPool1d, and sort of Conv2d at the moment.
-def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs,num_layers,prev_edges, input = [{'spikes': [1,0,0,0]}]):
+def identify_layer_type(dictionary, layer, input_found, num_previous_layer_outputs, num_layers, prev_edges, input = [{'spikes': [1,0,0,0]}]):
         if isinstance(layer, nn.Linear):
             print("Linear")
             if not input_found: # Case of first layer
                 num_previous_layer_outputs = layer.in_features
                 prev_edges = layer.weight.detach().numpy()
-                # TODO: commented code adds ability to add individual neurons
                 model_attributes = [{'soma_hw_name' : 'loihi_inputs'}, {'log_spikes': True}]
                 neuron_attributes = input #TODO: This will need to be reworked
                 add_neuron(dictionary, f'group{num_layers-1}', num_previous_layer_outputs, model_attributes, neuron_attributes)
+                # TODO: commented code adds ability to add individual neurons
                 #initialize_group(dictionary, f'group_{num_layers}', model_attributes)
                 #for i in range(num_previous_layer_outputs):
                 #    add_individual_neuron(dictionary, num_layers-1, i, [{'spikes' : [1,0,0,0]}])
@@ -164,10 +171,11 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
                 'kernel_count': layer.out_channels,
                 'stride_width': layer.stride[0],
                 'stride_height': layer.stride[0],
-                'weight': weights_flattened
+                'weight': weights_flattened,
+                
             }
             if not input_found: # I don't think this case is possible with current workloads
-                add_neuron(dictionary, 'input', layer.in_channels, {'soma_hw_name' : 'loihi_inputs'}, [])
+                add_neuron(dictionary, 'group0', layer.in_channels, {'soma_hw_name' : 'loihi_inputs'}, [])
                 input_found = True
             add_edges_conv(dictionary, num_layers, attributes, input_found)
         elif isinstance(layer, nn.MaxPool2d):
@@ -179,13 +187,16 @@ def identify_layer_type(dictionary, layer,input_found,num_previous_layer_outputs
                     # 'stride': layer.stride,
                     # 'padding': layer.padding,
                     # TODO: example of maxpool2d. Do we still need kernels and strides?
+                    'conv2d' : True,
                     'compartments': 3,
                     'compartment_in_ops' : ["skip", "peek_a", "pop_a_and_b"],
                     'compartment_out_ops' : ["push", "push", "skip"],
                     'compartment_join_ops' : ["skip", "add", "max"]
             }
-            # TODO: maybe add edges here for maxpool? They need somekind of edge parameter
-            add_neuron(dictionary, f'group{num_layers}', num_neurons, attributes, [])
+            #add_neuron(dictionary, f'group{num_layers}', num_neurons, attributes, [])
+            #num_layers += 1 # TODO: is this needed?
+            dictionary['network']['edges'].append(OrderedDict(attributes)) # might be wrong...
+            #add_edges_maxpool2d(dictionary, num_layers, {'compartment': 'x'}, input_found)
         elif isinstance(layer, nn.Dropout):
             print("Dropout") # Ignore dropout layers? during conversion, they are a function of trainings
         else:

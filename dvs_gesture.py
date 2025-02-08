@@ -41,7 +41,7 @@ class Net(torch.nn.Module):
         self.lif3 = snn.Leaky(beta=beta_3, threshold=threshold_3, spike_grad=spike_grad, init_hidden=True)
         
         self.linear1 = nn.Linear(64*4*4, 11)
-        self.dropout_4 = nn.Dropout(dropout) # setting a node to zero = remove all edges (deleting a node while)
+        self.dropout_4 = nn.Dropout(dropout) # Ignore since this is a function of traning?
         self.lif4 = snn.Leaky(beta=beta_4, threshold=threshold_4, spike_grad=spike_grad, init_hidden=True, output=True)
 
     def forward(self, x):
