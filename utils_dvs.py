@@ -1,14 +1,12 @@
 import numpy as np
-import torch
 import torch.nn as nn
 import snntorch as snn
-from snntorch import surrogate
 import yaml
 from collections import OrderedDict
 import os
 
 # Author: Aidan Aalund
-# Code for the yaml dictionary and dumping
+# Code for the yaml dictionary and dumping of the dvs example
 
 def init_dictionary(name = 'output'):
     return OrderedDict({

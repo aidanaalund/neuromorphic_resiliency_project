@@ -1,4 +1,4 @@
-import utils
+import utils_dvs
 
 import torch
 import torch.nn as nn
@@ -79,4 +79,4 @@ if __name__ == "__main__":
 
     # create yaml file (must handle nn conv2d and nn maxpool2d)
     # TODO: fix the input sizes and stuff
-    utils.convert_class_snn_to_yaml(net,'dvs_gesture')
+    utils_dvs.convert_class_snn_to_yaml(net,'dvs_gesture')

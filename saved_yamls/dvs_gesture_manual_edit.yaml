@@ -10,17 +10,17 @@ network:
     attributes:
     - threshold: 3.511291265487671
     neurons:
-    - 0..15: []
+    - 0..4095: []
   - name: group2
     attributes:
     - threshold: 3.4944379329681396
     neurons:
-    - 0..31: []
+    - 0..2047: []
   - name: group3
     attributes:
     - threshold: 1.598685383796692
     neurons:
-    - 0..63: []
+    - 0..1023: []
   - name: group4
     attributes:
     - threshold: 0.3641469180583954
