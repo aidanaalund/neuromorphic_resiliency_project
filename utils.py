@@ -172,7 +172,7 @@ def identify_layer_type(dictionary, layer, input_found, num_previous_layer_outpu
                 'stride_width': layer.stride[0],
                 'stride_height': layer.stride[0],
                 'weight': weights_flattened,
-                
+                'maxpool2d': True
             }
             if not input_found: # I don't think this case is possible with current workloads
                 add_neuron(dictionary, 'group0', layer.in_channels, {'soma_hw_name' : 'loihi_inputs'}, [])
@@ -182,21 +182,20 @@ def identify_layer_type(dictionary, layer, input_found, num_previous_layer_outpu
             print("MaxPool2D")
             # if maxpool, neuron: 0..15: [compartments: [in:, out:, join:, peek:]]
             attributes = {
-                    # 'type': 'maxpool2d',
-                    # 'kernel_size': layer.kernel_size,
-                    # 'stride': layer.stride,
-                    # 'padding': layer.padding,
                     # TODO: example of maxpool2d. Do we still need kernels and strides?
-                    'conv2d' : True,
+                    'type': 'maxpool2d',
+                    'kernel_size': layer.kernel_size,
+                    'stride': layer.stride,
+                    'padding': layer.padding,
                     'compartments': 3,
                     'compartment_in_ops' : ["skip", "peek_a", "pop_a_and_b"],
                     'compartment_out_ops' : ["push", "push", "skip"],
                     'compartment_join_ops' : ["skip", "add", "max"]
             }
             #add_neuron(dictionary, f'group{num_layers}', num_neurons, attributes, [])
-            #num_layers += 1 # TODO: is this needed?
-            dictionary['network']['edges'].append(OrderedDict(attributes)) # might be wrong...
-            #add_edges_maxpool2d(dictionary, num_layers, {'compartment': 'x'}, input_found)
+            num_layers += 1 # TODO: is this needed?
+            #dictionary['network']['edges'].append(OrderedDict(attributes)) # might be wrong...
+            add_edges_maxpool2d(dictionary, num_layers, attributes, input_found)
         elif isinstance(layer, nn.Dropout):
             print("Dropout") # Ignore dropout layers? during conversion, they are a function of trainings
         else:
