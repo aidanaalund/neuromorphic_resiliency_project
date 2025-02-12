@@ -99,7 +99,7 @@ if __name__ == "__main__":
     preprocessors = []
     postprocessors = []
 
-    static_metrics = [Footprint, ConnectionSparsity, ParameterCount]
+    static_metrics = [Footprint, ConnectionSparsity]
     workload_metrics = [R2, ActivationSparsity, SynapticOperations, MembraneUpdates]
 
     benchmark = Benchmark(model, test_set_loader,

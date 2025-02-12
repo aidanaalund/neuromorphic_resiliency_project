@@ -1,5 +1,0 @@
-nohup: ignoring input
-Traceback (most recent call last):
-  File "/home/ala4225/nmr_project/neurobench_testcases/neurobench_gsc.py", line 14, in <module>
-    from neurobench.metrics.workload import (
-ImportError: cannot import name 'ParameterCount' from 'neurobench.metrics.workload' (/home/ala4225/.conda/envs/neuroenv/lib/python3.10/site-packages/neurobench/metrics/workload/__init__.py)

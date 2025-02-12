@@ -35,6 +35,7 @@ if __name__ == "__main__":
 
     beta = 0.9
     spike_grad = surrogate.fast_sigmoid()
+    # TODO: tap into this network to get the spikes
     net = nn.Sequential(
         nn.Flatten(),
         nn.Linear(20, 256),
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     postprocessors = [ChooseMaxCount()]
 
     static_metrics = [Footprint, ConnectionSparsity]
-    workload_metrics = [ClassificationAccuracy, ParameterCount, ActivationSparsity, SynapticOperations, MembraneUpdates]
+    workload_metrics = [ClassificationAccuracy, ActivationSparsity, SynapticOperations, MembraneUpdates]
 
     benchmark = Benchmark(model, test_set_loader,
                         preprocessors, postprocessors, [static_metrics, workload_metrics])
