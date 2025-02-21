@@ -102,7 +102,6 @@ if __name__ == "__main__":
     
     print(new_state_dict.keys())
     net.load_state_dict(new_state_dict)
-    # TODO: figure out the input encoding
 
     # convert to yaml
     #utils.convert_class_snn_to_yaml(net,'gsc',[{'rate': 0.6}])

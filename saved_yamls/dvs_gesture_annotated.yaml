@@ -10,17 +10,21 @@ network:
     attributes:
     - threshold: 3.511291265487671
     neurons:
-    - 0..4095: []
+    - 0..15: []
   - name: group2
     attributes:
     - threshold: 3.4944379329681396
+    - compartments: 4 # c1, c2, c3, c4
+    - compartment_in_ops: ["skip", "pop", "pop", "pop"]
+    - compartment_join_ops: ["skip", "max", "max", "max"]
+    - compartment_out_ops: ["push", "push", "push", "skip"]
     neurons:
-    - 0..2047: []
+    - 0..31: []
   - name: group3
     attributes:
     - threshold: 1.598685383796692
     neurons:
-    - 0..1023: []
+    - 0..63: []
   - name: group4
     attributes:
     - threshold: 0.3641469180583954
@@ -238,24 +242,14 @@ network:
         -0.051733214408159256, 0.14785702526569366, 0.11959892511367798, 0.14750774204730988,
         0.25500184297561646, 0.34566450119018555, 0.1099465861916542, 0.09626264125108719]
       maxpool2d: true
-  - group0 -> group1:
-    - type: maxpool2d
-      kernel_size: 2
-      stride: 2
-      padding: 0
-      compartments: 3
-      compartment_in_ops:
-      - skip
-      - peek_a
-      - pop_a_and_b
-      compartment_out_ops:
-      - push
-      - push
-      - skip
-      compartment_join_ops:
-      - skip
-      - add
-      - max
+      pool_width: 2
+      pool_height: 2
+      pool_params:
+        compartment:
+        - 0
+        - 1
+        - 2
+        - 3
   - group1 -> group2:
     - type: conv2d
       input_height: 5
@@ -3467,24 +3461,14 @@ network:
         0.36711812019348145, -0.055139705538749695, -0.07995738834142685, -0.24159659445285797,
         0.06515640020370483, -0.1541358083486557, -0.04698852449655533, -0.002698068041354418]
       maxpool2d: true
-  - group1 -> group2:
-    - type: maxpool2d
-      kernel_size: 2
-      stride: 2
-      padding: 0
-      compartments: 3
-      compartment_in_ops:
-      - skip
-      - peek_a
-      - pop_a_and_b
-      compartment_out_ops:
-      - push
-      - push
-      - skip
-      compartment_join_ops:
-      - skip
-      - add
-      - max
+      pool_width: 2
+      pool_height: 2
+      pool_params:
+        compartment:
+        - 0
+        - 1
+        - 2
+        - 3
   - group2 -> group3:
     - type: conv2d
       input_height: 5
@@ -16297,24 +16281,14 @@ network:
         -0.07371605932712555, -0.04877181723713875, -0.0462951585650444, -0.024248672649264336,
         0.35386577248573303]
       maxpool2d: true
-  - group2 -> group3:
-    - type: maxpool2d
-      kernel_size: 2
-      stride: 2
-      padding: 0
-      compartments: 3
-      compartment_in_ops:
-      - skip
-      - peek_a
-      - pop_a_and_b
-      compartment_out_ops:
-      - push
-      - push
-      - skip
-      compartment_join_ops:
-      - skip
-      - add
-      - max
+      pool_width: 2
+      pool_height: 2
+      pool_params:
+        compartment:
+        - 0
+        - 1
+        - 2
+        - 3
   - group3.0 -> group4.0:
     - weight: 0.1386529952287674
   - group3.1 -> group4.0:
