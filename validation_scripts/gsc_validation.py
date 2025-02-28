@@ -103,5 +103,7 @@ if __name__ == "__main__":
     print(new_state_dict.keys())
     net.load_state_dict(new_state_dict)
 
+    # maybe try NIR?
+
     # convert to yaml
-    #utils.convert_class_snn_to_yaml(net,'gsc',[{'rate': 0.6}])
+    # utils.convert_class_snn_to_yaml(net,'gsc',[{'rate': 0.6}])
