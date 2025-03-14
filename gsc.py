@@ -25,7 +25,5 @@ if __name__ == "__main__":
     model_path = r"/home/ala4225/neurobench/neurobench/examples/gsc/model_data/s2s_gsc_snntorch"
     net.load_state_dict(torch.load(model_path, map_location=torch.device('cpu'),weights_only = True))
 
-    # TODO: figure out the input encoding
-
     # convert to yaml
     utils.convert_sequential_snn_to_yaml(net,'gsc',[{'rate': 0.6}])
