@@ -7,10 +7,31 @@ import sys
 
 # import sanafe stuff
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-#PROJECT_DIR = os.path.abspath((os.path.join(SCRIPT_DIR, os.pardir)))
-PROJECT_DIR = '/home/ala4225/sana-fe'
+PROJECT_DIR = os.path.abspath((os.path.join(SCRIPT_DIR, os.pardir)))
 sys.path.insert(0, PROJECT_DIR)
 import sanafe
+
+ARCH_FILENAME = "loihi.yaml"
+NETWORK_FILENAME = "dvs_gesture_32x32.net"
+LOIHI_TIME_DATA_FILENAME = "loihi_gesture_32x32_time.csv"
+LOIHI_ENERGY_DATA_FILENAME = "loihi_gesture_32x32_energy.csv"
+SIM_TIME_DATA_FILENAME = "sim_gesture_32x32_time.csv"
+SIM_ENERGY_DATA_FILENAME = "sim_gesture_32x32_energy.csv"
+
+#NETWORK_DIR = os.path.join(PROJECT_DIR, "runs", "dvs", "loihi_gesture_32x32_apr03")
+NETWORK_DIR = os.path.join(PROJECT_DIR, "runs", "dvs", "loihi_gesture_32x32_sep30")
+#NETWORK_DIR = os.path.join(PROJECT_DIR, "runs", "dvs", "loihi_gesture_32x32")
+DVS_RUN_DIR = os.path.join(PROJECT_DIR, "runs", "dvs")
+
+ARCH_PATH = os.path.join(PROJECT_DIR, "arch", ARCH_FILENAME)
+GENERATED_NETWORK_PATH = os.path.join(DVS_RUN_DIR, NETWORK_FILENAME)
+#LOIHI_TIME_DATA_PATH = os.path.join(DVS_RUN_DIR, "loihi_gesture_32x32_apr03", LOIHI_TIME_DATA_FILENAME)
+LOIHI_TIME_DATA_PATH = os.path.join(DVS_RUN_DIR, LOIHI_TIME_DATA_FILENAME)
+LOIHI_ENERGY_DATA_PATH = os.path.join(DVS_RUN_DIR, LOIHI_ENERGY_DATA_FILENAME)
+SIM_TIME_DATA_PATH = os.path.join(DVS_RUN_DIR, SIM_TIME_DATA_FILENAME)
+SIM_ENERGY_DATA_PATH = os.path.join(DVS_RUN_DIR, SIM_ENERGY_DATA_FILENAME)
+
+
 
 # Citation: Network definition from neurobench Google Speech Commands example
 spike_grad = surrogate.fast_sigmoid()
