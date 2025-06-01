@@ -65,8 +65,8 @@ if __name__ == "__main__":
     net = SCNN()
     
     # Load the pre-trained weights
-    model_path = r"/home/ala4225/neurobench/neurobench/examples/nehar/model_data\WISDM_snnTorch.ckpt"
+    model_path = r"/home/ala4225/neurobench/neurobench/examples/nehar/model_data/WISDM_snnTorch.ckpt"
     net.load_state_dict(torch.load(model_path))
 
     # convert to yaml
-    utils.convert_class_snn_to_yaml(net,'nehar')
+    #utils.convert_class_snn_to_yaml(net,'nehar')
